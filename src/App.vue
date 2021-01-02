@@ -56,10 +56,10 @@ export default{
     //get the location******************************************************************
 ////////////////////////////////////////////////////////////////////////////////////////
     async function getLocation(){
-        const locationData = await axios.get(`http://ip-api.com/json/`)
-        //error.value= null
-        latLocation.value= locationData.data.lat
-        lonLocation.value= locationData.data.lon
+        const locationData = await axios.get('https://ipapi.co/json/')
+        console.log(locationData)
+        latLocation.value= locationData.data.latitude
+        lonLocation.value= locationData.data.longitude
     } 
 
     //get the weather**********************************************************
@@ -75,14 +75,12 @@ export default{
       } catch (err) {
         isLoading.value= false
        if (err.response) {
-      
-      
         error.value= err.response.data.error.message
       } else if (err.request) {
       
-        console.log(err.request);
+        error.value= err.request.data.error.message
       } else {
-        error.value=error.message
+        console.log(err)
       }
     }
       
@@ -92,7 +90,6 @@ export default{
     })
     
     getWeather()
-
 
     return{
       latLocation,

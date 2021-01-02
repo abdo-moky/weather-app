@@ -113,7 +113,8 @@ export default {
             }
             .reset-city{
                 background-color: var(--secondary-color);
-                padding: 0 2rem;
+                align-self: center;
+                padding: 1rem 1.2rem;
                 color: rgb(33, 39, 48);
                 font-size: 1.6rem;
                 letter-spacing: 1px;
