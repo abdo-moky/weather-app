@@ -1,9 +1,9 @@
 <template>
   <div id="app" :class="{'light': !isDark}">
     <the-header @get-city="searchCity= $event" @get-theme="isDark= !isDark" :isDark="isDark"></the-header>
-    <transition-group name="fade">
+    <transition name="fade">
 
-      <div class="loading" v-if="isLoading">
+      <div class="loading" v-if="isLoading || forecastData === null">
           <img src="./assets/images/Dual-Ball-1s-200px.svg" alt="loading ball">
       </div>
       <the-weather v-else
@@ -13,7 +13,7 @@
         :error='error'
         :loading='isLoading'
       ></the-weather>
-    </transition-group>
+    </transition>
     
   </div>
 </template>
@@ -49,7 +49,9 @@ export default{
     const forecast= ref(null)
     
     const forecastData= computed(()=>{
-      return forecast.value[day.value]
+      if(forecast.value === null){
+        return null
+      }else return forecast.value[day.value] 
     })
     const fcLocation= ref(null) 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +69,7 @@ export default{
       isLoading.value=true
       try {
         await getLocation()
-        const weatherData = await axios.get(`http://api.weatherapi.com/v1/forecast.json?key=545aad964706421ca0d163403202511&q=${location.value}&days=3`)
+        const weatherData = await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=545aad964706421ca0d163403202511&q=${location.value}&days=3`)
         isLoading.value= false
         error.value= null
         forecast.value= weatherData.data.forecast.forecastday
@@ -88,7 +90,6 @@ export default{
     watch(location, (newVal, oldVal)=>{
       getWeather()
     })
-    
     getWeather()
 
     return{

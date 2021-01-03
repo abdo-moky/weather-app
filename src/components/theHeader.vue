@@ -89,6 +89,9 @@ export default {
                 flex: 0 1 100%;
                 order: 3;
                 margin-top: 2rem;
+                &:focus{
+                flex: 0 1 100%;
+            }
             }
         }
         .header-actions{
