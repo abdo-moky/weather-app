@@ -57,15 +57,26 @@ export default{
 /////////////////////////////////////////////////////////////////////////////////////////
     //get the location******************************************************************
 ////////////////////////////////////////////////////////////////////////////////////////
-    async function getLocation(){
-        //const proxy= `https://cors-anywhere.herokuapp.com/`
-          const locationData = await axios.get(`https://ip-api.com/json/`) 
+     function getLocation(){
+      function success(position) {
+         latLocation.value  = position.coords.latitude;
+         lonLocation.value = position.coords.longitude;   
+      };
+
+      function error() {
+        error.value = "Unable to retrieve your location";
+      };
+
+
+  navigator.geolocation.getCurrentPosition(success, error);
+}
+        /* const proxy= `https://cors-anywhere.herokuapp.com/`
+          const locationData = await axios.get('https://cors-anywhere.herokuapp.com/https://ipapi.co/json/') 
           console.log(locationData)
-          latLocation.value= locationData.data.lat
-          lonLocation.value= locationData.data.lon
+          latLocation.value= locationData.data.latitude
+          lonLocation.value= locationData.data.longitude
         
-          
-    } 
+           */
     getLocation()
 
     //get the weather**********************************************************
