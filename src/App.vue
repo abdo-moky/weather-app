@@ -59,7 +59,7 @@ export default{
 ////////////////////////////////////////////////////////////////////////////////////////
     async function getLocation(){
         //const proxy= `https://cors-anywhere.herokuapp.com/`
-          const locationData = await axios.get(`http://ip-api.com/json/`)
+          const locationData = await axios.get(`https://ip-api.com/json/`)
           console.log(locationData)
           latLocation.value= locationData.data.lat
           lonLocation.value= locationData.data.lon
