@@ -58,24 +58,27 @@ export default{
     //get the location******************************************************************
 ////////////////////////////////////////////////////////////////////////////////////////
     async function getLocation(){
-        const locationData = await axios.get('https://ipapi.co/json/')
-        console.log(locationData)
-        latLocation.value= locationData.data.latitude
-        lonLocation.value= locationData.data.longitude
+        //const proxy= `https://cors-anywhere.herokuapp.com/`
+          const locationData = await axios.get(`http://ip-api.com/json/`)
+          console.log(locationData)
+          latLocation.value= locationData.data.lat
+          lonLocation.value= locationData.data.lon
+        
+          
     } 
+    getLocation()
 
     //get the weather**********************************************************
     async function getWeather(){
       isLoading.value=true
       try {
-        await getLocation()
         const weatherData = await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=545aad964706421ca0d163403202511&q=${location.value}&days=3`)
         isLoading.value= false
         error.value= null
         forecast.value= weatherData.data.forecast.forecastday
         fcLocation.value= weatherData.data.location
       } catch (err) {
-        isLoading.value= false
+        isLoading.value= false 
        if (err.response) {
         error.value= err.response.data.error.message
       } else if (err.request) {
@@ -87,10 +90,9 @@ export default{
     }
       
     }
-    watch(location, (newVal, oldVal)=>{
+    watch(location, ()=>{
       getWeather()
     })
-    getWeather()
 
     return{
       latLocation,
